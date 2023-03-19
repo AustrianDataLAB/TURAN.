@@ -6,12 +6,6 @@ services:
     environment:
       EXTENSION_PRIORITY: "*, saml"
       GUACD_HOSTNAME: guacd
-#      OPENID_AUTHORIZATION_ENDPOINT: https://localhost/auth/realms/test/protocol/openid-connect/auth
-#      OPENID_JWKS_ENDPOINT: http://keycloak:8080/auth/realms/test/protocol/openid-connect/certs
-#      OPENID_ISSUER: https://localhost/auth/realms/test
-#      OPENID_CLIENT_ID: guacamole
-#      OPENID_REDIRECT_URI: https://localhost/guacamole/
-#      OPENID_USERNAME_CLAIM_TYPE: nickname
       POSTGRES_DATABASE: guacamole
       POSTGRES_HOSTNAME: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD}
@@ -43,7 +37,6 @@ services:
       - ./haproxy/haproxy.pem:/usr/local/etc/haproxy/haproxy.pem:ro
   keycloak:
     command: start --import-realm
-# --log=console,file --log-level=DEBUG --log-file=/tmp/keycloak.log
     depends_on:
       - postgres
     environment:
