@@ -63,6 +63,7 @@ services:
       - ./keycloak/import:/opt/keycloak/data/import:ro
   postgres:
     environment:
+      GUACAMOLE_GROUPS: ${GUACAMOLE_GROUPS:?GUACAMOLE_GROUPS}
       POSTGRES_DB: guacamole
       POSTGRES_HOST_AUTH_METHOD: password
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD}
