@@ -76,6 +76,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
-      - ./postgres/data:/var/lib/postgresql/data
+#      - ./postgres/data:/var/lib/postgresql/data
     volumes_from:
       - guacamole
