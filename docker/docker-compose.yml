@@ -61,6 +61,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./keycloak/import:/opt/keycloak/data/import:ro
+  openssh:
+    build: openssh
+    environment:
+      OPENSSH_ROOT_PASSWORD: ${OPENSSH_ROOT_PASSWORD:?OPENSSH_ROOT_PASSWORD}
+    image: turandot/openssh
   postgres:
     environment:
       GUACAMOLE_GROUPS: ${GUACAMOLE_GROUPS:?GUACAMOLE_GROUPS}
