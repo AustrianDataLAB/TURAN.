@@ -3,6 +3,7 @@ on:
   workflow_dispatch
 jobs:
   docker-compose:
+    runs-on: ubuntu-latest
     steps:
       - name: Start containers
         run: docker-compose -f docker/docker-compose.yml up -d
