@@ -1,4 +1,4 @@
-name: Build and push lecture5 image
+name: Build and push the gucamole client image
 on:
   push:
     branches:
