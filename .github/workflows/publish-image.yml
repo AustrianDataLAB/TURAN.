@@ -55,11 +55,6 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Scan the image and upload dependency results
         uses: anchore/sbom-action@bb716408e75840bbb01e839347cd213767269d4a
         with:
