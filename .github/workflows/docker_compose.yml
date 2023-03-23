@@ -7,6 +7,8 @@ jobs:
     steps:
       - name: Print environment variables
         run: env
+      - name: Get current working directory
+        run: pwd
       - name: List files of current directory
         run: ls -al
       - name: Start containers
