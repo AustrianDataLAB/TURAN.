@@ -1,9 +1,8 @@
-name: Build and push lecture5 image
+name: Build and push the guacamole client image
 on:
   push:
     branches:
       - main 
-  pull_request:
 
 env:
   REGISTRY: ghcr.io
