@@ -7,6 +7,8 @@ jobs:
     steps:
       - name: Print environment variables
         run: env
+      - name: List files of current directory
+        run: ls -al
       - name: Start containers
         run: docker-compose -f docker/docker-compose.yml up -d
       - name: Stop containers
