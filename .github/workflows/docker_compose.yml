@@ -1,23 +1,8 @@
 name: Docker compose and start the structure
-
-on:
-  push:
-    branches:
-    - main
-    - features/**
-  pull_request:
-    branches:
-    - main
-    
 jobs:
-  docker:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-
+  docker-compose:
     steps:
-    - name: Start containers
-      run: docker-compose -f "docker-compose.yml" up -d
-    
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      - name: Start containers
+        run: docker-compose -f docker/docker-compose.yml up -d
+      - name: Stop containers
+        run: docker-compose -f docker/docker-compose.yml down
