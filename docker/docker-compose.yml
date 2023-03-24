@@ -6,6 +6,15 @@ services:
     environment:
       EXTENSION_PRIORITY: "*, saml"
       GUACD_HOSTNAME: guacd
+      LDAP_CONFIG_BASE_DN: ${GUACAMOLE_LDAP_CONFIG_BASE_DN:?GUACAMOLE_LDAP_CONFIG_BASE_DN}
+      LDAP_ENCRYPTION_METHOD: ${GUACAMOLE_LDAP_ENCRYPTION_METHOD:?GUACAMOLE_LDAP_ENCRYPTION_METHOD}
+      LDAP_GROUP_BASE_DN: ${GUACAMOLE_LDAP_GROUP_BASE_DN:?GUACAMOLE_LDAP_GROUP_BASE_DN}
+      LDAP_GROUP_SEARCH_FILTER: ${GUACAMOLE_LDAP_GROUP_SEARCH_FILTER:?GUACAMOLE_LDAP_GROUP_SEARCH_FILTER}
+      LDAP_HOSTNAME: ${GUACAMOLE_LDAP_HOSTNAME:?GUACAMOLE_LDAP_HOSTNAME}
+      LDAP_PORT: ${GUACAMOLE_LDAP_PORT:?GUACAMOLE_LDAP_PORT}
+      LDAP_SEARCH_BIND_DN: ${GUACAMOLE_LDAP_SEARCH_BIND_DN:?GUACAMOLE_LDAP_SEARCH_BIND_DN}
+      LDAP_SEARCH_BIND_PASSWORD: ${GUACAMOLE_LDAP_SEARCH_BIND_PASSWORD:?GUACAMOLE_LDAP_SEARCH_BIND_PASSWORD}
+      LDAP_USER_BASE_DN: ${GUACAMOLE_LDAP_USER_BASE_DN:?GUACAMOLE_LDAP_USER_BASE_DN}
       POSTGRES_DATABASE: guacamole
       POSTGRES_HOSTNAME: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD}
@@ -18,6 +27,7 @@ services:
     image: guacamole/guacamole:${GUACAMOLE_VERSION:?GUACAMOLE_VERSION}
     restart: unless-stopped
     volumes:
+      - /opt/guacamole/ldap
       - /opt/guacamole/mysql/schema
       - /opt/guacamole/postgresql/schema
   guacd:
@@ -38,6 +48,7 @@ services:
   keycloak:
     command: start --import-realm
     depends_on:
+      - openldap
       - postgres
     environment:
       KC_DB: postgres
@@ -61,6 +72,15 @@ services:
     restart: unless-stopped
     volumes:
       - ./keycloak/import:/opt/keycloak/data/import:ro
+  openldap:
+    build: openldap
+    environment:
+      DEBUG_LEVEL: shell
+    image: turandot/openldap
+    volumes:
+      - ./openldap/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    volumes_from:
+      - guacamole
   openssh:
     build: openssh
     environment:

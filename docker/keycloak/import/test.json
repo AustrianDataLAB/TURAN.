@@ -36,6 +36,75 @@
       ]
     }
   ],
+  "components": {
+    "org.keycloak.storage.UserStorageProvider": [
+      {
+        "config": {
+          "authType": [
+            "simple"
+          ],
+          "bindCredential": [
+            "123456"
+          ],
+          "bindDn": [
+            "cn=keycloak,ou=service users,dc=example,dc=org"
+          ],
+          "changedSyncPeriod": [
+            "60"
+          ],
+          "connectionUrl": [
+            "ldap://openldap"
+          ],
+          "editMode": [
+            "READ_ONLY"
+          ],
+          "enabled": [
+            "true"
+          ],
+          "rdnLDAPAttribute": [
+            "uid"
+          ],
+          "userObjectClasses": [
+            "inetOrgPerson, organizationalPerson"
+          ],
+          "usernameLDAPAttribute": [
+            "uid"
+          ],
+          "usersDn": [
+            "ou=users,dc=example,dc=org"
+          ],
+          "uuidLDAPAttribute": [
+            "entryUUID"
+          ],
+          "validatePasswordPolicy": [
+            "false"
+          ],
+          "vendor": [
+            "other"
+          ]
+        },
+        "name": "OpenLDAP",
+        "providerId": "ldap",
+        "subComponents": {
+          "org.keycloak.storage.ldap.mappers.LDAPStorageMapper": [
+            {
+              "config": {
+                "ldap.attribute": [
+                  "uid"
+                ],
+                "user.model.attribute": [
+                  "username"
+                ]
+              },
+              "name": "username",
+              "providerId": "user-attribute-ldap-mapper",
+              "subComponents": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
   "enabled": true,
   "realm": "test"
 }
