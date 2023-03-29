@@ -1,4 +1,4 @@
-name: Build and push the gucamole client image
+name: Build and push the gucamole client image - test harald
 on:
   workflow_dispatch
 
