@@ -1,6 +1,5 @@
 name: Build and push the gucamole client image
 on:
-  workflow_dispatch
   push:
     branches:
       - main 
