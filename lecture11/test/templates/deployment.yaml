@@ -32,7 +32,7 @@ spec:
           # TODO change how we get the password
           env:    
             - name: POSTGRESQL_PASSWORD
-              value: "123"
+              value: "1234"
             #  valueFrom:
             #    secretKeyRef:
             #    key: postgresql-password
