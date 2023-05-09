@@ -26,7 +26,7 @@ jobs:
 #            lecture11/*
 
       - name: Run chart-releaser
-        if: steps.changed-files-specific.outputs.any_modified == 'true'
+#       if: steps.changed-files-specific.outputs.any_modified == 'true'
         uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: charts
