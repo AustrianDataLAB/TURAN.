@@ -17,13 +17,13 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
 
-      - name: Get specific changed files                  # To check if any files changed in charts/pacman-rancher directory
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v14.5
-        with:
-          since_last_remote_commit: true
-          files: |
-            lecture11/*
+#      - name: Get specific changed files                  # To check if any files changed in charts/pacman-rancher directory
+#        id: changed-files-specific
+#        uses: tj-actions/changed-files@v14.5
+#        with:
+#          since_last_remote_commit: true
+#          files: |
+#            lecture11/*
 
       - name: Run chart-releaser
         if: steps.changed-files-specific.outputs.any_modified == 'true'
