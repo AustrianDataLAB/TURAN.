@@ -85,3 +85,4 @@ affinity: {}
 
 postgresql:
   postgresqlPassword: "123"
+
