@@ -15,7 +15,17 @@ backend:
     port: 8000
     type: ClusterIP
 
-
+turandot:
+  #defaultAdminPassword: #{TEAM0_SECRET}#
+  apiDoc: "1"
+  image:
+    repository: CHANGEME
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "CHANGEME"
+  service:
+    port: 8000
+    type: ClusterIP
 
 imagePullSecrets: []
 nameOverride: ""
@@ -74,14 +84,15 @@ ingress:
      nginx.ingress.kubernetes.io/auth-url: "https://oauth.#{DNSA}#.#{ENV}#.#{TLD}#/oauth2/auth"
      nginx.ingress.kubernetes.io/auth-signin: "https://oauth.#{DNSA}#.#{ENV}#.#{TLD}#/oauth2/start?rd=https://$host$request_uri"
   hosts:
-    - host: team0.#{DNSA}#.#{ENV}#.#{TLD}#
+     # TODO
+    - host: team3.#{DNSA}#.#{ENV}#.#{TLD}#
       paths:
         - path: /
           pathType: Prefix
   tls: 
-    - secretName: team0-ingress-tls
+    - secretName: team3-ingress-tls
       hosts:
-        - team0.#{DNSA}#.#{ENV}#.#{TLD}#
+        - team3.#{DNSA}#.#{ENV}#.#{TLD}#
 
 
 resources: 
@@ -115,4 +126,5 @@ db:
   storage: 1Gi
   # Use plain text data, helm will 
 
-
+postgresql:
+  postgresqlPassword: "123"
