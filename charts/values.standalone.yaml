@@ -128,3 +128,8 @@ db:
 
 postgresql:
   postgresqlPassword: "123"
+
+service:
+  type: ClusterIP
+  port: 80
+
