@@ -1,0 +1,118 @@
+# This is a YAML-formatted file.
+# This Values File is Parsed in a AZURE DevOps Pipeline for deployment into the Austrian Open Cloud Community.
+
+replicaCount: 1
+
+backend:
+  defaultAdminPassword: #{TEAM0_SECRET}#
+  apiDoc: "1"
+  image:
+    repository: CHANGEME
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "CHANGEME"
+  service:
+    port: 8000
+    type: ClusterIP
+
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+  #seccomp.security.alpha.kubernetes.io/defaultProfileName: runtime/default
+
+# TODO: we need to fix that the Seccomp annoations are actually used
+podSecurityContext: {}
+ # enabled: true
+    ## @param apiGatewayNginx.podSecurityContext.defaultSeccompProfile Use the default seccomp profile for the API Gateway
+  #defaultSeccompProfile: true
+  # fsGroup: 2000
+
+securityContext: 
+   capabilities:
+     drop:
+     - ALL
+  # readOnlyRootFilesystem: true
+   runAsNonRoot: true
+   runAsUser: 1000
+
+#this is the frontend, which I havnt written the deployment for yet
+frontend:
+  image:
+    repository: CHANGEME
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "CHANGEME"
+  service:
+    type: ClusterIP
+    port: 8888
+  securityContext: 
+   capabilities:
+     drop:
+     - ALL
+   runAsNonRoot: true
+   runAsUser: 101
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: 
+     cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+     nginx.ingress.kubernetes.io/auth-url: "https://oauth.#{DNSA}#.#{ENV}#.#{TLD}#/oauth2/auth"
+     nginx.ingress.kubernetes.io/auth-signin: "https://oauth.#{DNSA}#.#{ENV}#.#{TLD}#/oauth2/start?rd=https://$host$request_uri"
+  hosts:
+    - host: team0.#{DNSA}#.#{ENV}#.#{TLD}#
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: 
+    - secretName: team0-ingress-tls
+      hosts:
+        - team0.#{DNSA}#.#{ENV}#.#{TLD}#
+
+
+resources: 
+  limits:
+    cpu: 700m
+    memory: 950Mi
+  requests:
+    cpu: 700m
+    memory: 950Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+db:
+  image:  
+    repository: bitnami/postgresql
+    tag: "13"
+  autoscaling: 
+    enabled: false
+  replicaCount: 1
+  storage: 1Gi
+  # Use plain text data, helm will 
+
+
