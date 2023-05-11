@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/AustrianDataLAB/TURAN./releases/download/test-0.3.0/test-0.3.0.tgz
     version: 0.3.0
-generated: "2023-05-11T12:07:55.983116434Z"
+  turandot:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-05-11T12:43:45.308960423Z"
+    description: A Helm chart for Kubernetes
+    digest: bbbd41ea896a35317a366c2f6bad8e646d666e476a2ed2d32f5e589a3a24804f
+    name: turandot
+    type: application
+    urls:
+    - https://github.com/AustrianDataLAB/TURAN./releases/download/turandot-0.4.0/turandot-0.4.0.tgz
+    version: 0.4.0
+generated: "2023-05-11T12:43:45.308969423Z"
