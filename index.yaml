@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  test:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-05-11T12:07:55.983110234Z"
+    description: A Helm chart for Kubernetes
+    digest: 89408a726064a0b0023c2010562d798ffa6cf3a85ad1b3b9fc713af0e3024e72
+    name: test
+    type: application
+    urls:
+    - https://github.com/AustrianDataLAB/TURAN./releases/download/test-0.3.0/test-0.3.0.tgz
+    version: 0.3.0
+generated: "2023-05-11T12:07:55.983116434Z"
