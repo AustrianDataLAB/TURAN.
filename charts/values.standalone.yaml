@@ -116,15 +116,15 @@ tolerations: []
 
 affinity: {}
 
-db:
-  image:  
-    repository: bitnami/postgresql
-    tag: "13"
-  autoscaling: 
-    enabled: false
-  replicaCount: 1
-  storage: 1Gi
-  # Use plain text data, helm will 
+
+image:  
+  repository: bitnami/postgresql
+  tag: "13"
+autoscaling: 
+  enabled: false
+replicaCount: 1
+storage: 1Gi
+# Use plain text data, helm will 
 
 postgresql:
   postgresqlPassword: "123"
