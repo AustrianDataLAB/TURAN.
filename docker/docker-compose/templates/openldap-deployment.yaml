@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath -c
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: openldap
+  name: openldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: openldap
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath -c
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: openldap
+    spec:
+      containers:
+        - env:
+            - name: DEBUG_LEVEL
+              value: shell
+          image: turandot/openldap
+          name: openldap
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: openldap-hostpath0
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /Users/melho/TU/SEM2/HOCN/TURAN./docker/openldap/docker-entrypoint-initdb.d
+          name: openldap-hostpath0
+status: {}

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath -c
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath -c
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: postgres
+    spec:
+      containers:
+        - env:
+            - name: GUACAMOLE_GROUPS
+              value: ${GUACAMOLE_GROUPS:?GUACAMOLE_GROUPS}
+            - name: POSTGRES_DB
+              value: guacamole
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: password
+            - name: POSTGRES_KEYCLOAK_DB
+              value: ${POSTGRES_KEYCLOAK_DB:?POSTGRES_KEYCLOAK_DB}
+            - name: POSTGRES_KEYCLOAK_PASSWORD
+              value: ${POSTGRES_KEYCLOAK_PASSWORD:?POSTGRES_KEYCLOAK_PASSWORD}
+            - name: POSTGRES_KEYCLOAK_USER
+              value: ${POSTGRES_KEYCLOAK_USER:?POSTGRES_KEYCLOAK_USER}
+            - name: POSTGRES_PASSWORD
+              value: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD}
+            - name: POSTGRES_USER
+              value: guacamole
+          image: postgres:${POSTGRES_VERSION:?POSTGRES_VERSION}
+          name: postgres
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: postgres-hostpath0
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /Users/melho/TU/SEM2/HOCN/TURAN./docker/postgres/docker-entrypoint-initdb.d
+          name: postgres-hostpath0
+status: {}

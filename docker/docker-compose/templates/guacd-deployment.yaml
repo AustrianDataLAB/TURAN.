@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath -c
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: guacd
+  name: guacd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: guacd
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath -c
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: guacd
+    spec:
+      containers:
+        - image: guacamole/guacd:${GUACAMOLE_VERSION:?GUACAMOLE_VERSION}
+          name: guacd
+          resources: {}
+      restartPolicy: Always
+status: {}

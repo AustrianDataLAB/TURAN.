@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath -c
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: haproxy
+  name: haproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: haproxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath -c
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: haproxy
+    spec:
+      containers:
+        - image: haproxy:${HAPROXY_VERSION:?HAPROXY_VERSION}
+          name: haproxy
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/local/etc/haproxy/haproxy.cfg
+              name: haproxy-hostpath0
+              readOnly: true
+            - mountPath: /usr/local/etc/haproxy/haproxy.pem
+              name: haproxy-hostpath1
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /Users/melho/TU/SEM2/HOCN/TURAN./docker/haproxy/haproxy.cfg
+          name: haproxy-hostpath0
+        - hostPath:
+            path: /Users/melho/TU/SEM2/HOCN/TURAN./docker/haproxy/haproxy.pem
+          name: haproxy-hostpath1
+status: {}
