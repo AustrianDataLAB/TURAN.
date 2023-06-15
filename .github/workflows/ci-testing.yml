@@ -1,0 +1,17 @@
+name: TURANDOT CI Testing
+
+on: workflow_dispatch
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Run Selenium Tests
+    steps:
+      - name: Start selenoid
+        uses: Xotabu4/selenoid-github-action@v2
+
+      - uses: actions/checkout@v1
+      - run: npm --prefix tests/ ci
+
+      - name: Run end to end tests
+        run: npm run --prefix tests/ test
