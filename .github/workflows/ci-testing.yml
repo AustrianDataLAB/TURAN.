@@ -1,4 +1,4 @@
-name: Helm-Release
+name: TURANDOT CI Testing
 
 on: workflow_dispatch
 
