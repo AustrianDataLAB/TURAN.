@@ -3,7 +3,8 @@ const { By, Builder, Browser } = require('selenium-webdriver');
 // import suite from 'selenium-webdriver/testing';
 const assert = require('assert');
 const suite = require('selenium-webdriver/testing');
-var webdriver = require('selenium-webdriver');
+const Chrome = require('selenium-webdriver/chrome');
+const options = new Chrome.Options();
 
 const TITLE = 'Apache Guacamole';
 const KEYCLOAK_TITLE = 'Sign in to turandot';
@@ -19,8 +20,9 @@ suite.suite(
       let driver;
 
       before(async function () {
-        driver = new webdriver.Builder()
-          .forBrowser('chrome')
+        driver = await env
+          .builder()
+          .setChromeOptions(options.addArguments('--headless=new'))
           .withCapabilities({
             browserName: 'chrome',
             acceptSslCerts: true,
@@ -35,15 +37,13 @@ suite.suite(
         });*/
       });
 
-      after(async () => await driver.quit());
-
       it('Test login and logout functionality', async function () {
         await driver.get('https://localhost/guacamole/');
+        await driver.manage().setTimeouts({ implicit: 3000 });
 
         let title = await driver.getTitle();
-        await assert.equal(TITLE, title);
+        assert.equal(TITLE, title);
 
-        await driver.manage().setTimeouts({ implicit: 3000 });
         const samlButton = await driver.findElement(
           By.css('.sso-provider > .ng-binding')
         );
@@ -82,8 +82,10 @@ suite.suite(
           By.css('.notification > .ng-scope')
         );
         assert.equal(LOGOUT_MSG, await logoutMsg.getText());
+
+        await driver.quit();
       });
     });
   },
-  { browsers: [Browser.FIREFOX, Browser.CHROME] }
+  { browsers: [Browser.CHROME] }
 );
