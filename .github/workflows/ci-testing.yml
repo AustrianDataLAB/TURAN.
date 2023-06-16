@@ -10,8 +10,13 @@ jobs:
       - name: Start selenoid
         uses: Xotabu4/selenoid-github-action@v2
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - run: npm --prefix tests/ ci
+
+      - name: Run docker compose and start Application
+        uses: isbang/compose-action@v1.4.1
+        with:
+          compose-file: './docker/docker-compose.yml'
 
       - name: Run end to end tests
         run: npm run --prefix tests/ test
