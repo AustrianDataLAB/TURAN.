@@ -17,6 +17,9 @@ jobs:
         uses: isbang/compose-action@v1.4.1
         with:
           compose-file: './docker/docker-compose.yml'
+          
+      - name: Wait 15 seconds
+        run: sleep 15
 
       - name: Run end to end tests
         run: npm run --prefix tests/ test
